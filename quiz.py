@@ -1,5 +1,3 @@
-import turtle
-import random
 namn = input("Vad heter du?") #spelarens namn
 print("hej " + namn) # säger hej till de namnet du valde
 
@@ -42,4 +40,4 @@ if poäng == 12:
     print("\n du fick max poäng bra jobbat här har du en lossas bokal.")
 
 else:
-    print("eftersom " + poäng + " poäng så får du inte en bokal")
+    print("eftersom " + str(poäng) + " poäng så får du inte en bokal")

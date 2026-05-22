@@ -1,5 +1,6 @@
-from pynput.keyboard import Key, Controller
 import time
+
+from pynput.keyboard import Controller, Key
 
 keyboard = Controller()
 

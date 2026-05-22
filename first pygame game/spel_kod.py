@@ -1,5 +1,7 @@
-import pygame, sys
 import os
+import sys
+
+import pygame
 
 pygame.font.init()
 pygame.mixer.init()
@@ -13,15 +15,15 @@ BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
 
-BORDER = pygame.Rect(WIDTH//2 - 5, 0, 10, HEIGHT)
+BORDER = pygame.Rect(WIDTH // 2 - 5, 0, 10, HEIGHT)
 
-BULLET_HIT_SOUND = pygame.mixer.Sound('bilder och ljud/Grenade+1.mp3')
-BULLET_FIRE_SOUND = pygame.mixer.Sound('bilder och ljud/Gun+Silencer.mp3')
+BULLET_HIT_SOUND = pygame.mixer.Sound("bilder och ljud/Grenade+1.mp3")
+BULLET_FIRE_SOUND = pygame.mixer.Sound("bilder och ljud/Gun+Silencer.mp3")
 # os.path.join('bilder, 'Gun+Silencer.mp3') funkade inte men deta funka
 
-HEALTH_FONT = pygame.font.SysFont('comicsans', 40)
-WINSTREAK_FONT = pygame.font.SysFont('comicsans', 15)
-WINNER_FONT = pygame.font.SysFont('comicsans', 100)
+HEALTH_FONT = pygame.font.SysFont("comicsans", 40)
+WINSTREAK_FONT = pygame.font.SysFont("comicsans", 15)
+WINNER_FONT = pygame.font.SysFont("comicsans", 100)
 
 red_wins = 0
 yellow_wins = 0
@@ -36,27 +38,32 @@ YELLOW_HIT = pygame.USEREVENT + 1
 RED_HIT = pygame.USEREVENT + 2
 
 YELLOW_SPACESHIP_IMAGE = pygame.image.load(
-    os.path.join('bilder och ljud', 'spaceship_yellow.png'))
-YELLOW_SPACESHIP = pygame.transform.rotate(pygame.transform.scale(
-    YELLOW_SPACESHIP_IMAGE, (SPACESHIP_WIDTH, SPACESHIP_HEIGHT)), 90)
+    os.path.join("bilder och ljud", "spaceship_yellow.png")
+)
+YELLOW_SPACESHIP = pygame.transform.rotate(
+    pygame.transform.scale(YELLOW_SPACESHIP_IMAGE, (SPACESHIP_WIDTH, SPACESHIP_HEIGHT)),
+    90,
+)
 
 RED_SPACESHIP_IMAGE = pygame.image.load(
-    os.path.join('bilder och ljud', 'spaceship_red.png'))
-RED_SPACESHIP = pygame.transform.rotate(pygame.transform.scale(
-    RED_SPACESHIP_IMAGE, (SPACESHIP_WIDTH, SPACESHIP_HEIGHT)), 270)
+    os.path.join("bilder och ljud", "spaceship_red.png")
+)
+RED_SPACESHIP = pygame.transform.rotate(
+    pygame.transform.scale(RED_SPACESHIP_IMAGE, (SPACESHIP_WIDTH, SPACESHIP_HEIGHT)),
+    270,
+)
 
-SPACE = pygame.transform.scale(pygame.image.load(
-    os.path.join('bilder och ljud', 'space.png')), (WIDTH, HEIGHT))
+SPACE = pygame.transform.scale(
+    pygame.image.load(os.path.join("bilder och ljud", "space.png")), (WIDTH, HEIGHT)
+)
 
 
 def draw_window(red, yellow, red_bullets, yellow_bullets, red_health, yellow_health):
     WIN.blit(SPACE, (0, 0))
     pygame.draw.rect(WIN, BLACK, BORDER)
 
-    red_health_text = HEALTH_FONT.render(
-        "Health: " + str(red_health), 1, WHITE)
-    yellow_health_text = HEALTH_FONT.render(
-        "Health: " + str(yellow_health), 1, WHITE)
+    red_health_text = HEALTH_FONT.render("Health: " + str(red_health), 1, WHITE)
+    yellow_health_text = HEALTH_FONT.render("Health: " + str(yellow_health), 1, WHITE)
     WIN.blit(red_health_text, (WIDTH - red_health_text.get_width() - 10, 10))
     WIN.blit(yellow_health_text, (10, 10))
 
@@ -110,12 +117,17 @@ def handle_bullets(yellow_bullets, red_bullets, yellow, red):
             red_bullets.remove(bullet)
         elif bullet.x < 0:
             red_bullets.remove(bullet)
-        
+
 
 def draw_winner(text):
     draw_text = WINNER_FONT.render(text, 1, WHITE)
-    WIN.blit(draw_text, (WIDTH/2 - draw_text.get_width() /
-                         2, HEIGHT/2 - draw_text.get_height()/2))
+    WIN.blit(
+        draw_text,
+        (
+            WIDTH / 2 - draw_text.get_width() / 2,
+            HEIGHT / 2 - draw_text.get_height() / 2,
+        ),
+    )
     pygame.display.update()
     pygame.time.delay(3000)
 
@@ -141,15 +153,20 @@ def main():
                 sys.exit()
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE and len(yellow_bullets) < MAX_BULLETS: # yellow skjut
+                if (
+                    event.key == pygame.K_SPACE and len(yellow_bullets) < MAX_BULLETS
+                ):  # yellow skjut
                     bullet = pygame.Rect(
-                        yellow.x + yellow.width, yellow.y + yellow.height//2 - 2, 10, 5)
+                        yellow.x + yellow.width,
+                        yellow.y + yellow.height // 2 - 2,
+                        10,
+                        5,
+                    )
                     yellow_bullets.append(bullet)
                     BULLET_FIRE_SOUND.play()
 
                 if event.key == pygame.K_RSHIFT and len(red_bullets) < MAX_BULLETS:
-                    bullet = pygame.Rect(
-                        red.x, red.y + red.height//2 - 2, 10, 5)
+                    bullet = pygame.Rect(red.x, red.y + red.height // 2 - 2, 10, 5)
                     red_bullets.append(bullet)
                     BULLET_FIRE_SOUND.play()
 
@@ -178,8 +195,7 @@ def main():
 
         handle_bullets(yellow_bullets, red_bullets, yellow, red)
 
-        draw_window(red, yellow, red_bullets, yellow_bullets,
-                    red_health, yellow_health)
+        draw_window(red, yellow, red_bullets, yellow_bullets, red_health, yellow_health)
 
     main()
 

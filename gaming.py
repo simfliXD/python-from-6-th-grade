@@ -1,8 +1,7 @@
 from pynput.mouse import Button ,Controller
 import subprocess
 import time
-import keyboard
-import pyautogui
+
 
 mouse = Controller()
 

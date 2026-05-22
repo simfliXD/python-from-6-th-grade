@@ -5,5 +5,3 @@ g = Game()
 while g.running:
     g.game_loop()
     g.curr_menu.display_menu()
-
- 
